@@ -1,8 +1,12 @@
 # heartbeat-client
 
+This code can be seen on any of these repositories:
+[GitLab](https://gitlab.com/luisnabais/heartbeat-client)
+[GitHub](https://github.com/luisnabais/heartbeat-client)
+[Codeberg](https://codeberg.org/luisnabais/heartbeat-client)
+
 ## Description
-Python script running inside a docker container, which posts a heartbeat endpoint (which uses my [heartbeat-server](/luisnabais/heartbeat-server)
- project) to say it's alive.
+Python script running inside a docker container, which posts a heartbeat endpoint (which uses my [heartbeat-server](https://gitlab.com/luisnabais/heartbeat-server) project) to say it's alive.
 Script can also be executed locally or any other way, as long as dependencies are met.
 
 ## Instructions

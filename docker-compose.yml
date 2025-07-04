@@ -2,8 +2,7 @@ version: '3.8'
 
 services:
   heartbeat-client:
-    build: .
-    image: luisnabais/hearbeat-client:latest
+    image: luisnabais/heartbeat-client:latest
     container_name: heartbeat-client
     hostname: heartbeat-client
     restart: unless-stopped

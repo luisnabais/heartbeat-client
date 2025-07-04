@@ -10,16 +10,16 @@ HEARTBEAT_INTERVAL = int(os.getenv("HEARTBEAT_INTERVAL", "120"))
 
 SERVER_URL = f"http://{SERVER_HOST}:{SERVER_PORT}/heartbeat"
 
-print(f"[INFO] Heartbeat client iniciado como '{CLIENT_ID}', a enviar para {SERVER_URL} a cada {HEARTBEAT_INTERVAL}s.")
+print(f"[INFO] Heartbeat client started as '{CLIENT_ID}', sending to {SERVER_URL} every {HEARTBEAT_INTERVAL}s.")
 
 while True:
     timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
     try:
         response = requests.post(SERVER_URL, json={"client_id": CLIENT_ID}, timeout=5)
         if response.status_code == 200:
-            print(f"[{timestamp}] [OK] Heartbeat enviado para {SERVER_URL} como '{CLIENT_ID}'")
+            print(f"[{timestamp}] [OK] Heartbeat sent to {SERVER_URL} as '{CLIENT_ID}'")
         else:
-            print(f"[{timestamp}] [ERRO] Resposta inesperada: {response.status_code} ao enviar heartbeat para '{CLIENT_ID}'")
+            print(f"[{timestamp}] [ERROR] Unexpected response: {response.status_code} while sending heartbeat to '{CLIENT_ID}'")
     except Exception as e:
-        print(f"[{timestamp}] [FALHA] Falha ao enviar heartbeat para {SERVER_URL} como '{CLIENT_ID}': {e}")
+        print(f"[{timestamp}] [EXCEPTION] Failed to send heartbeat to {SERVER_URL} as '{CLIENT_ID}': {e}")
     time.sleep(HEARTBEAT_INTERVAL)

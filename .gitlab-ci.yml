@@ -21,7 +21,7 @@ auto-tag:
     VERSION=$(cat VERSION)
     echo "Versão: $VERSION"
     if git rev-parse "$VERSION" >/dev/null 2>&1; then
-      echo "Tag $VERSION já existe, a pipeline não vai criar nova tag."
+      echo "Tag $VERSION already exists, pipeline won't create a new tag."
       exit 0
     fi
     git config --global user.email "ci@example.com"
@@ -39,6 +39,7 @@ container-build:
   before_script:
     - docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
+    - wget -qO- https://github.com/christian-korneck/docker-pushrm/releases/latest/download/docker-pushrm_linux_amd64.tar.gz | tar xz -C /usr/local/bin
   script:
     - docker buildx create --use
     - docker buildx build
@@ -49,5 +50,6 @@ container-build:
       --tag ${DOCKER_REGISTRY}:${CI_COMMIT_TAG}
       --push
       .
+    - docker pushrm luisnabais/heartbeat-client
   rules:
     - if: $CI_COMMIT_TAG
