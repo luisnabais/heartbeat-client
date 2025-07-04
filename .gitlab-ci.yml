@@ -39,7 +39,7 @@ container-build:
   before_script:
     - docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
-    - wget -qO- https://github.com/christian-korneck/docker-pushrm/releases/latest/download/docker-pushrm_linux_amd64.tar.gz | tar xz -C /usr/local/bin
+    - wget -qO- https://github.com/christian-korneck/docker-pushrm/releases/latest/download/docker-pushrm_linux_amd64 | tar xz -C /usr/local/bin
   script:
     - docker buildx create --use
     - docker buildx build
