@@ -27,6 +27,7 @@ auto-tag:
     git config --global user.email "ci@example.com"
     git config --global user.name "CI Bot"
     git tag "$VERSION"
+    git remote set-url origin https://gitlab-ci-token:${PUSH_TOKEN}@gitlab.com/luisnabais/heartbeat-client.git
     git push origin "$VERSION"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
