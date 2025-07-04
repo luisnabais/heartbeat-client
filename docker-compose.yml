@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  heartbeat-client:
+    build: .
+    image: luisnabais/hearbeat-client:1.2
+    container_name: heartbeat-client
+    hostname: heartbeat-client
+    restart: unless-stopped
+    environment:
+      - HEARTBEAT_SERVER_HOST=${HEARTBEAT_SERVER_HOST}
+      - HEARTBEAT_SERVER_PORT=${HEARTBEAT_SERVER_PORT}
+      - HEARTBEAT_CLIENT_ID=${HEARTBEAT_CLIENT_ID}
+      - HEARTBEAT_INTERVAL=${HEARTBEAT_INTERVAL}
