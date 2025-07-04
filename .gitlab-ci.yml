@@ -5,7 +5,7 @@ stages:
   - build
 
 variables:
-  DOCKER_REGISTRY: 'luisnabais/heartbeat-client'
+  DOCKER_REGISTRY: "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}"
   BUILDX_PLATFORMS: "linux/amd64,linux/arm64/v8"
 
 services:
@@ -27,7 +27,7 @@ auto-tag:
     git config --global user.email "ci@example.com"
     git config --global user.name "CI Bot"
     git tag "$VERSION"
-    git remote set-url origin https://gitlab-ci-token:${PUSH_TOKEN}@gitlab.com/luisnabais/heartbeat-client.git
+    git remote set-url origin https://gitlab-ci-token:${PUSH_TOKEN}@gitlab.com/${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}.git
     git push origin "$VERSION"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
@@ -37,7 +37,7 @@ auto-tag:
 container-build:
   stage: build
   before_script:
-    - docker login -u ${DOCKER_USER} -p ${DOCKER_TOKEN}
+    - docker login -u ${CI_PROJECT_NAMESPACE} -p ${DOCKER_TOKEN}
     - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin
     - mkdir -p ~/.docker/cli-plugins
     - wget -O ~/.docker/cli-plugins/docker-pushrm https://github.com/christian-korneck/docker-pushrm/releases/latest/download/docker-pushrm_linux_amd64
@@ -52,6 +52,6 @@ container-build:
       --tag ${DOCKER_REGISTRY}:${CI_COMMIT_TAG}
       --push
       .
-    - docker pushrm luisnabais/heartbeat-client
+    - docker pushrm ${DOCKER_REGISTRY}
   rules:
     - if: $CI_COMMIT_TAG
