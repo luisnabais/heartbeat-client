@@ -17,17 +17,17 @@ auto-tag:
   before_script:
     - apk add --no-cache git
   script:
-    - export VERSION=$(cat VERSION)
-    - echo "Versão: $VERSION"
-    - |
-      if git rev-parse "$VERSION" >/dev/null 2>&1; then
-        echo "Tag $VERSION já existe, a pipeline não vai criar nova tag."
-        exit 0
-      fi
-    - git config --global user.email "ci@example.com"
-    - git config --global user.name "CI Bot"
-    - git tag "$VERSION"
-    - git push origin "$VERSION"
+  - |
+    VERSION=$(cat VERSION)
+    echo "Versão: $VERSION"
+    if git rev-parse "$VERSION" >/dev/null 2>&1; then
+      echo "Tag $VERSION já existe, a pipeline não vai criar nova tag."
+      exit 0
+    fi
+    git config --global user.email "ci@example.com"
+    git config --global user.name "CI Bot"
+    git tag "$VERSION"
+    git push origin "$VERSION"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
